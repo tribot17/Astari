@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  font-family: "Inter", sans-serif;
+}
+
+a:visited {
+  color: white;
+}
+
+body {
+  background: #3e1936;
+  background: linear-gradient(
+    190deg,
+    rgba(62, 25, 54, 1) 30%,
+    rgba(0, 0, 0, 1) 120%
+  );
+}
