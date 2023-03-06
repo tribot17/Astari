@@ -3,7 +3,7 @@ import styles from "./HomePage.module.scss";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className={styles.homePage}>
       <img src="../../../assets/Stars.png" id={styles.stars} />
       <img src="../../../assets/earth.png" id={styles.earth} />
       <div className={styles.logo_button}>

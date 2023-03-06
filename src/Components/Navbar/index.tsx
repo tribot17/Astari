@@ -8,7 +8,9 @@ const Navbar = () => {
         <img id={styles.logo} src="../../../assets/Logo.png" />
       </Link>
       <div className={styles.displayLink}>
-        <a className={styles.links}>WHITEPAPER</a>
+        <Link to={"/custom"}>
+          <a className={styles.links}>WHITEPAPER</a>
+        </Link>
         <a className={styles.links}>TEAM</a>
         <Link to={"/mint"}>
           <a className={styles.links}>MINT</a>
