@@ -9,50 +9,89 @@ import noses from "../../../assets/svg/Noses/noses";
 
 const index = () => {
   const PART = ["head", "hair", "eyes", "nose", "mouth", "beard"];
-  const [index, setIndex] = useState<any>({
-    head: 1,
-  });
-  const [partColor, setPartColor] = useState({
-    head: 0,
-    beard: 0,
-    hair: 0,
-    mouth: 0,
-    nose: 0,
-    eyes: 0,
-  });
   const [partIndex, setPartIndex] = useState<string>(PART[0]);
-  const limit: { [key: string]: number } = {
-    head: 4,
-    beard: 4,
-    hair: 4,
-    mouth: 4,
-    nose: 4,
-    eyes: 4,
-  };
+  const [bodyPart, setBodyPart] = useState<any>({
+    head: {
+      index: 1,
+      color: "#ffffff",
+      limit: 4,
+    },
+    hair: {
+      index: 0,
+      color: "#ffffff",
+      limit: 4,
+    },
+    eyes: {
+      index: 0,
+      color: "#ffffff",
+      limit: 4,
+    },
+    nose: {
+      index: 0,
+      color: "#ffffff",
+      limit: 4,
+    },
+    mouth: {
+      index: 0,
+      color: "#ffffff",
+      limit: 4,
+    },
+    beard: {
+      index: 0,
+      color: "#ffffff",
+      limit: 4,
+    },
+  });
 
-  const handleIndexChange = (part: any) => {
-    const arrow: string = part.target.alt;
+  const handleIndexChange = (e: any) => {
+    const arrow: string = e.target.alt;
+    console.log(partIndex, bodyPart[partIndex], bodyPart);
 
-    if (index[partIndex]) {
-      if (arrow === "left_arrow") {
-        if (
-          index[partIndex] > 0 &&
-          index[partIndex] <= limit[partIndex] &&
-          index[partIndex] - 1 !== 0
-        )
-          setIndex({ ...index, [partIndex]: index[partIndex] - 1 });
-        else setIndex({ ...index, [partIndex]: limit[partIndex] });
-      } else {
-        if (index[partIndex] > 0 && index[partIndex] < limit[partIndex])
-          setIndex({ ...index, [partIndex]: index[partIndex] + 1 });
-        else setIndex({ ...index, [partIndex]: 1 });
-      }
-    } else setIndex({ ...index, [partIndex]: 1 });
+    if (arrow === "left_arrow") {
+      if (
+        bodyPart[partIndex].index > 0 &&
+        bodyPart[partIndex].index <= bodyPart[partIndex].limit &&
+        bodyPart[partIndex].index - 1 !== 0
+      ) {
+        setBodyPart({
+          ...bodyPart,
+          [partIndex]: {
+            ...bodyPart[partIndex],
+            index: bodyPart[partIndex].index - 1,
+          },
+        });
+      } else
+        setBodyPart({
+          ...bodyPart,
+          [partIndex]: {
+            ...bodyPart[partIndex],
+            index: bodyPart[partIndex].limit,
+          },
+        });
+    } else {
+      if (
+        bodyPart[partIndex].index > 0 &&
+        bodyPart[partIndex].index < bodyPart[partIndex].limit
+      )
+        setBodyPart({
+          ...bodyPart,
+          [partIndex]: {
+            ...bodyPart[partIndex],
+            index: bodyPart[partIndex].index + 1,
+          },
+        });
+      else
+        setBodyPart({
+          ...bodyPart,
+          [partIndex]: { ...bodyPart[partIndex], index: 1 },
+        });
+    }
   };
 
   const handlePartChange = (arrow: any) => {
     const arrayIndex = PART.indexOf(partIndex);
     let endIndex = "";
+
     if (arrow.target.alt === "up_arrow") {
       if (arrayIndex + 1 < PART.length) {
         setPartIndex(PART[arrayIndex + 1]);
@@ -62,7 +101,7 @@ const index = () => {
         endIndex = PART[0];
       }
     } else {
-      if (arrayIndex - 1 > 0) {
+      if (arrayIndex - 1 >= 0) {
         setPartIndex(PART[arrayIndex - 1]);
         endIndex = PART[arrayIndex - 1];
       } else {
@@ -71,23 +110,33 @@ const index = () => {
       }
     }
 
-    if (index[endIndex] === undefined) {
-      setIndex({ ...index, [index[endIndex]]: 1 });
+    if (BodyIndex[endIndex] === undefined) {
+      setIndex({ ...BodyIndex, [BodyIndex[endIndex]]: 1 });
     }
   };
 
   const handleColorChange = (e) => {
-    const color: string = e.target.value;
-    const red = parseInt(color.substring(1, 3), 16);
-    const green = parseInt(color.substring(3, 5), 16);
-    const blue = parseInt(color.substring(5, 7), 16);
+    // const color: string = e.target.value;
 
-    // setHue(e.target.value);
-    setPartColor({ ...partColor, [partIndex]: e.target.value });
+    let r = parseInt(e.target.value.substring(1, 3), 16);
+    let g = parseInt(e.target.value.substring(3, 5), 16);
+    let b = parseInt(e.target.value.substring(5, 7), 16);
+
+    r = Math.max(r - 10, 0);
+    g = Math.max(g - 10, 0);
+    b = Math.max(b - 10, 0);
+
+    let darkenedHex = "#" + r.toString(16) + g.toString(16) + b.toString(16);
+
+    // ...bodyPart[partIndex]
+    setBodyPart({
+      ...bodyPart,
+      [partIndex]: { index: bodyPart[partIndex].index, color: e.target.value },
+    });
   };
 
   const handleSavePicture = (e) => {
-    console.log(e);
+    console.log(bodyPart);
   };
 
   return (
@@ -97,87 +146,111 @@ const index = () => {
         <h2>THE PILOT WILL BE LINKED WITH ADDRESS !</h2>
       </div>
       <div className={styles.create_container}>
-        <div className={styles.change_part_index}>
-          <img
-            onClick={handlePartChange}
-            alt="up_arrow"
-            id={styles.up_arrow}
-            src={`../../../assets/RightArrow.png`}
-          />
-          <p>{partIndex.toLocaleUpperCase()}</p>
-          <img
-            onClick={handlePartChange}
-            alt="down_arrow"
-            id={styles.down_arrow}
-            src={`../../../assets/RightArrow.png`}
-          />
-        </div>
         <div className={styles.charac_container}>
           <img id={styles.body} src="../../../assets/Body.png" />
           <div
             id={styles.head}
             dangerouslySetInnerHTML={{
-              __html: `${heads[index["head"]](partColor.head)}`,
+              __html: `${heads[bodyPart["head"].index](
+                bodyPart["head"].color
+              )}`,
             }}
           ></div>
-          {index["hair"] && (
+          {bodyPart["hair"].index > 0 && (
             <div
               id={styles.hair}
               dangerouslySetInnerHTML={{
-                __html: `${hairs[index["hair"]](partColor.hair)}`,
+                __html: `${hairs[bodyPart["hair"].index](
+                  bodyPart["hair"].color
+                )}`,
               }}
             ></div>
           )}
-          {index["nose"] && (
+          {bodyPart["nose"].index > 0 && (
             <div
               id={styles.nose}
               dangerouslySetInnerHTML={{
-                __html: `${noses[index["nose"]](partColor.nose)}`,
+                __html: `${noses[bodyPart["nose"].index](
+                  bodyPart["nose"].color
+                )}`,
               }}
             ></div>
           )}
-          {index["eyes"] && (
+          {bodyPart["eyes"].index > 0 && (
             <div
               id={styles.eyes}
               dangerouslySetInnerHTML={{
-                __html: `${eyes[index["eyes"]](partColor.eyes)}`,
+                __html: `${eyes[bodyPart["eyes"].index](
+                  bodyPart["eyes"].color
+                )}`,
               }}
             ></div>
           )}
-          {index["mouth"] && (
+          {bodyPart["mouth"].index > 0 && (
             <div
               id={styles.month}
               dangerouslySetInnerHTML={{
-                __html: `${mouths[index["mouth"]](partColor.mouth)}`,
+                __html: `${mouths[bodyPart["mouth"].index](
+                  bodyPart["mouth"].color
+                )}`,
               }}
             ></div>
           )}
-          {index["beard"] && (
+          {bodyPart["beard"].index > 0 && (
             <div
               id={styles.beard}
               dangerouslySetInnerHTML={{
-                __html: `${beards[index["beard"]](partColor.beard)}`,
+                __html: `${beards[bodyPart["beard"].index](
+                  bodyPart["beard"].color
+                )}`,
               }}
             ></div>
           )}
-          <img
-            onClick={handleIndexChange}
-            alt="rigth_arrow"
-            id={styles.right_arrow}
-            src={`../../../assets/RightArrow.png`}
-          />
-          <img
-            onClick={handleIndexChange}
-            alt="left_arrow"
-            id={styles.left_arrow}
-            src={`../../../assets/LeftArrow.png`}
-          />
         </div>
-
-        <button onClick={handleSavePicture}>
-          <p>SAVE</p>
-        </button>
-        <input type="color" name="color_picker" onChange={handleColorChange} />
+        <div className={styles.custom_inputs}>
+          <div className={styles.change_part_index}>
+            <img
+              onClick={handlePartChange}
+              alt="up_arrow"
+              id={styles.up_arrow}
+              src={`../../../assets/RightArrow.png`}
+            />
+            <p>{partIndex.toLocaleUpperCase()}</p>
+            <img
+              onClick={handlePartChange}
+              alt="down_arrow"
+              id={styles.down_arrow}
+              src={`../../../assets/RightArrow.png`}
+            />
+          </div>
+          <div className={styles.change_index}>
+            <img
+              onClick={handleIndexChange}
+              alt="left_arrow"
+              id={styles.left_arrow}
+              src={`../../../assets/LeftArrow.png`}
+            />
+            <p>{bodyPart[partIndex].index ? bodyPart[partIndex].index : 0}</p>
+            <img
+              onClick={handleIndexChange}
+              alt="rigth_arrow"
+              id={styles.right_arrow}
+              src={`../../../assets/RightArrow.png`}
+            />
+          </div>
+          <div className={styles.color_picker_container}>
+            <input
+              type="color"
+              id={styles.input_color}
+              name="color_picker"
+              onChange={handleColorChange}
+            />
+            <p>PICK A COLOR</p>
+          </div>
+          <button onClick={handleSavePicture}>
+            <p>SAVE</p>
+          </button>
+        </div>
       </div>
     </div>
   );
