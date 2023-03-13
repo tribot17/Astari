@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./HomePage.module.scss";
 
 const HomePage = () => {
+  useEffect(() => {}, []);
+
   return (
     <div className={styles.homePage}>
       <img src="../../../assets/Stars.png" id={styles.stars} />
@@ -17,8 +19,8 @@ const HomePage = () => {
       <img src="../../../assets/Mars.png" id={styles.mars} />
       <img src="../../../assets/Jupiter.png" id={styles.jupiter} />
       <img src="../../../assets/Planet.png" id={styles.planet} />
-
       <img src="../../../assets/Moon.png" id={styles.moon} />
+      <button>TEST DB</button>
     </div>
   );
 };
