@@ -1,11 +1,8 @@
 const ex = require("express");
 const router = ex.Router();
-const { setPosts } = require("../controllers/post.controllers");
+const { setPosts, getCharacter } = require("../controllers/post.controllers");
 
-router.get("/", (req: any, res: any) => {
-  const address = req.query.address;
-  res.json({ work: "work" });
-});
+router.get("/:address", getCharacter);
 
 router.post("/", setPosts);
 
