@@ -1,4 +1,6 @@
-import { CSSProperties, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Web3Context } from "../../Context/Web3Context";
+import axios from "axios";
 import styles from "./CustomPage.module.scss";
 import hairs from "../../../assets/svg/Hairs/hairs";
 import heads from "../../../assets/svg/Heads/heads";
@@ -6,10 +8,15 @@ import eyes from "../../../assets/svg/Eyes/eyes";
 import beards from "../../../assets/svg/Beards/beards";
 import mouths from "../../../assets/svg/Mouths/mouth";
 import noses from "../../../assets/svg/Noses/noses";
+import ColorPalette from "./ColorPalette";
+import { web3ContextInterface } from "../../../interfaces/ContextInterfaces";
+import Body from "./Body";
 
 const index = () => {
   const PART = ["head", "hair", "eyes", "nose", "mouth", "beard"];
   const [partIndex, setPartIndex] = useState<string>(PART[0]);
+  const [userAddress, setUserAddress] = useState<string>();
+  const [paletteIsOpen, setPaletteIsOpen] = useState<boolean>(false);
   const [bodyPart, setBodyPart] = useState<any>({
     head: {
       index: 1,
@@ -42,6 +49,17 @@ const index = () => {
       limit: 4,
     },
   });
+  const web3Context: any = useContext(Web3Context);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const data = await web3Context.getData();
+
+    setUserAddress(data.address);
+  };
 
   const handleIndexChange = (e: any) => {
     const arrow: string = e.target.alt;
@@ -90,7 +108,7 @@ const index = () => {
 
   const handlePartChange = (arrow: any) => {
     const arrayIndex = PART.indexOf(partIndex);
-    let endIndex = "";
+    let endIndex: any;
 
     if (arrow.target.alt === "up_arrow") {
       if (arrayIndex + 1 < PART.length) {
@@ -109,34 +127,22 @@ const index = () => {
         endIndex = PART[PART.length - 1];
       }
     }
-
-    if (BodyIndex[endIndex] === undefined) {
-      setIndex({ ...BodyIndex, [BodyIndex[endIndex]]: 1 });
-    }
   };
 
   const handleColorChange = (e) => {
-    // const color: string = e.target.value;
-
-    let r = parseInt(e.target.value.substring(1, 3), 16);
-    let g = parseInt(e.target.value.substring(3, 5), 16);
-    let b = parseInt(e.target.value.substring(5, 7), 16);
-
-    r = Math.max(r - 10, 0);
-    g = Math.max(g - 10, 0);
-    b = Math.max(b - 10, 0);
-
-    let darkenedHex = "#" + r.toString(16) + g.toString(16) + b.toString(16);
-
-    // ...bodyPart[partIndex]
     setBodyPart({
       ...bodyPart,
       [partIndex]: { index: bodyPart[partIndex].index, color: e.target.value },
     });
   };
 
-  const handleSavePicture = (e) => {
-    console.log(bodyPart);
+  const handleSavePicture = async () => {
+    console.log(bodyPart, userAddress);
+
+    await axios.post(`http://localhost:5000/send_character`, {
+      address: userAddress,
+      specs: bodyPart,
+    });
   };
 
   return (
@@ -147,7 +153,9 @@ const index = () => {
       </div>
       <div className={styles.create_container}>
         <div className={styles.charac_container}>
-          <img id={styles.body} src="../../../assets/Body.png" />
+          <div id={styles.body}>
+            <Body hue={bodyPart["head"].color} />
+          </div>
           <div
             id={styles.head}
             dangerouslySetInnerHTML={{
@@ -243,15 +251,25 @@ const index = () => {
               type="color"
               id={styles.input_color}
               name="color_picker"
+              value={bodyPart[partIndex].color}
               onChange={handleColorChange}
             />
             <p>PICK A COLOR</p>
           </div>
-          <button onClick={handleSavePicture}>
+          <button id={styles.save_button} onClick={handleSavePicture}>
             <p>SAVE</p>
           </button>
+          <button onClick={() => setPaletteIsOpen(true)}>Open</button>
         </div>
       </div>
+      {paletteIsOpen && (
+        <ColorPalette
+          setPaletteIsOpen={setPaletteIsOpen}
+          bodyPart={bodyPart}
+          setBodyPart={setBodyPart}
+          partIndex={partIndex}
+        />
+      )}
     </div>
   );
 };
