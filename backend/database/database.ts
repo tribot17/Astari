@@ -5,13 +5,17 @@ export const sendAddressCharacter = async (
   address: string,
   character_specs: string
 ) => {
+  // const stmt = db.prepare(
+  //   "INSERT INTO users (address, character_specs) VALUES (?, ?) ON CONFLICT(address) DO UPDATE SET character_specs = ?"
+  // );
+  // stmt.run([address, character_specs, character_specs]);
+  // stmt.finalize();
   db.run(
     "INSERT INTO users (address, character_specs) VALUES (?, ?) ON CONFLICT(address) DO UPDATE SET character_specs = ?",
     [address, character_specs, character_specs],
     (err: any) => {
-      if (err) {
-        console.error(err.message);
-      }
+      if (err) console.error(err.message);
+      else console.log("addded");
     }
   );
 };
@@ -22,13 +26,6 @@ export const postAddressCharacter = async (address: string, specs: object) => {
       "CREATE TABLE IF NOT EXISTS users (address TEXT UNIQUE, character_specs OBJECT)"
     );
     sendAddressCharacter(address, JSON.stringify(specs));
-    db.each(
-      "SELECT address, character_specs FROM users",
-      (err: any, row: any) => {
-        console.log(`${row.address}: ${row.character_specs}`);
-        console.log(JSON.parse(row.character_specs));
-      }
-    );
   });
   db.close();
 };
@@ -48,18 +45,20 @@ export const getAllUsers = () => {
 
 export const getUser = async (address: string) => {
   return new Promise((resolve: any, reject: any) => {
-    db.get(
-      "SELECT * FROM users WHERE address = ?",
-      [address],
-      (err: any, row: any) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(row);
+    db.serialize(() => {
+      db.get(
+        "SELECT * FROM users WHERE address = ?",
+        [address],
+        (err: any, row: any) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(row);
+          }
         }
-        db.close();
-      }
-    );
+      );
+    });
+    db.close();
   });
 };
 
