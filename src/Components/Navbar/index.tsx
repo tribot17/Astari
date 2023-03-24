@@ -11,13 +11,13 @@ const Navbar = () => {
         <Link to={"/custom"}>
           <a className={styles.links}>WHITEPAPER</a>
         </Link>
-        <a className={styles.links}>TEAM</a>
+        {/* <a className={styles.links}>TEAM</a> */}
         <Link to={"/mint"}>
           <a className={styles.links}>MINT</a>
         </Link>
-        <Link to={"/"}>
+        {/* <Link to={"/"}>
           <a className={styles.links}>HOME</a>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

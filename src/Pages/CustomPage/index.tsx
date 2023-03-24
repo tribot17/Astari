@@ -215,51 +215,62 @@ const index = () => {
             ></div>
           )}
         </div>
-        <div className={styles.custom_inputs}>
-          <div className={styles.change_part_index}>
-            <img
-              onClick={handlePartChange}
-              alt="up_arrow"
-              id={styles.up_arrow}
-              src={`../../../assets/RightArrow.png`}
-            />
-            <p>{partIndex.toLocaleUpperCase()}</p>
-            <img
-              onClick={handlePartChange}
-              alt="down_arrow"
-              id={styles.down_arrow}
-              src={`../../../assets/RightArrow.png`}
-            />
-          </div>
-          <div className={styles.change_index}>
-            <img
-              onClick={handleIndexChange}
-              alt="left_arrow"
-              id={styles.left_arrow}
-              src={`../../../assets/LeftArrow.png`}
-            />
-            <p>{bodyPart[partIndex].index ? bodyPart[partIndex].index : 0}</p>
-            <img
-              onClick={handleIndexChange}
-              alt="rigth_arrow"
-              id={styles.right_arrow}
-              src={`../../../assets/RightArrow.png`}
-            />
-          </div>
-          <div className={styles.color_picker_container}>
-            <input
-              type="color"
-              id={styles.input_color}
-              name="color_picker"
-              value={bodyPart[partIndex].color}
-              onChange={handleColorChange}
-            />
-            <p>PICK A COLOR</p>
+        <div className={styles.inputs_container}>
+          <div className={styles.custom_inputs}>
+            <div className={styles.index_arrow}>
+              <div className={styles.change_part_index}>
+                <img
+                  onClick={handlePartChange}
+                  alt="up_arrow"
+                  id={styles.up_arrow}
+                  src={`../../../assets/RightArrow.png`}
+                />
+                <p>{partIndex.toLocaleUpperCase()}</p>
+                <img
+                  onClick={handlePartChange}
+                  alt="down_arrow"
+                  id={styles.down_arrow}
+                  src={`../../../assets/RightArrow.png`}
+                />
+              </div>
+              <div className={styles.change_index}>
+                <img
+                  onClick={handleIndexChange}
+                  alt="left_arrow"
+                  id={styles.left_arrow}
+                  src={`../../../assets/LeftArrow.png`}
+                />
+                <p>
+                  {bodyPart[partIndex].index ? bodyPart[partIndex].index : 0}
+                </p>
+                <img
+                  onClick={handleIndexChange}
+                  alt="rigth_arrow"
+                  id={styles.right_arrow}
+                  src={`../../../assets/RightArrow.png`}
+                />
+              </div>
+            </div>
+            <div className={styles.color_picker_container}>
+              <input
+                type="color"
+                id={styles.input_color}
+                name="color_picker"
+                value={bodyPart[partIndex].color}
+                onChange={handleColorChange}
+              />
+              <p>PICK A COLOR</p>
+            </div>
+            <button
+              id={styles.color_palette_modal}
+              onClick={() => setPaletteIsOpen(true)}
+            >
+              COLOR PALETTE
+            </button>
           </div>
           <button id={styles.save_button} onClick={handleSavePicture}>
             <p>SAVE</p>
           </button>
-          <button onClick={() => setPaletteIsOpen(true)}>Open</button>
         </div>
       </div>
       {paletteIsOpen && (

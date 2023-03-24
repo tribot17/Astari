@@ -20,7 +20,6 @@ const HomePage = () => {
       <img src="../../../assets/Jupiter.png" id={styles.jupiter} />
       <img src="../../../assets/Planet.png" id={styles.planet} />
       <img src="../../../assets/Moon.png" id={styles.moon} />
-      <button>TEST DB</button>
     </div>
   );
 };

@@ -18,8 +18,10 @@
     position: relative;
     height: 70vh;
     border-radius: 25px;
-    text-align: center;
     background-color: white;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 
     .palette_modal_title {
       margin-top: 15px;
@@ -39,9 +41,10 @@
     .palette_modal_color_grid {
       display: grid;
       grid-template-columns: 25% 25% 25% 25%;
-      margin: auto;
       width: 80%;
       height: 80%;
+      align-items: center;
+      justify-content: center;
     }
 
     .card {
