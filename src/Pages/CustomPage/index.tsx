@@ -17,6 +17,8 @@ const index = () => {
   const [partIndex, setPartIndex] = useState<string>(PART[0]);
   const [userAddress, setUserAddress] = useState<string>();
   const [paletteIsOpen, setPaletteIsOpen] = useState<boolean>(false);
+  const [isAlreadyInDataBase, setisAlreadyInDataBase] =
+    useState<boolean>(false);
   const [bodyPart, setBodyPart] = useState<any>({
     head: {
       index: 1,
@@ -59,6 +61,7 @@ const index = () => {
     const data = await web3Context.getData();
 
     setUserAddress(data.address);
+    await getUserBody(data.address);
   };
 
   const handleIndexChange = (e: any) => {
@@ -129,20 +132,31 @@ const index = () => {
     }
   };
 
-  const handleColorChange = (e) => {
+  const handleColorChange = (e: any) => {
     setBodyPart({
       ...bodyPart,
       [partIndex]: { index: bodyPart[partIndex].index, color: e.target.value },
     });
   };
 
-  const handleSavePicture = async () => {
-    console.log(bodyPart, userAddress);
+  const getUserBody = async (address: string) => {
+    if (address)
+      await axios
+        .get(`http://localhost:5000/send_character/${address}`)
+        .then((res) => {
+          setBodyPart(JSON.parse(res.data.user.character_specs));
+          setisAlreadyInDataBase(true);
+        })
+        .catch((err) => console.log(err));
+  };
 
-    await axios.post(`http://localhost:5000/send_character`, {
-      address: userAddress,
-      specs: bodyPart,
-    });
+  const handleSavePicture = async () => {
+    await axios
+      .post(`http://localhost:5000/send_character`, {
+        address: userAddress,
+        specs: bodyPart,
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
