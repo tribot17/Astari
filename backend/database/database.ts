@@ -1,5 +1,9 @@
 const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database("./database/database.db");
+const db = new sqlite3.Database("./database/database.db", (err: any) => {
+  if (err) {
+    console.log("error database", err);
+  }
+});
 
 export const sendAddressCharacter = async (
   address: string,
@@ -44,28 +48,24 @@ export const getAllUsers = () => {
 };
 
 export const getUser = async (address: string) => {
+  const db2 = new sqlite3.Database("./database/database.db", (err: any) => {
+    if (err) {
+      console.log("error database", err);
+    }
+  });
+
   return new Promise((resolve: any, reject: any) => {
-    db.serialize(() => {
-      db.get(
-        "SELECT * FROM users WHERE address = ?",
-        [address],
-        (err: any, row: any) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(row);
-          }
+    db2.get(
+      "SELECT * FROM users WHERE address = ?",
+      [address],
+      (err: any, row: any) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(row);
         }
-      );
-    });
-    db.close();
+        db2.close();
+      }
+    );
   });
 };
-
-// postAddressCharacter("0x15", { name: "salut" });
-
-// const getUser = async () => {
-//   console.log(await getAllUsers());
-
-//   // console.log(getSpecificUser("0x"));
-// };
