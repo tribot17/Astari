@@ -1,5 +1,6 @@
+import { ColorMap } from "../../../interfaces/interfaces";
 import { darkenColor } from "../../../utils/helpers";
-export const beards = {
+export const beards: ColorMap = {
   "1": (hue: string) => {
     return `
     <svg

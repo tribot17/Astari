@@ -1,4 +1,6 @@
-export const mouth = {
+import { ColorMap } from "../../../interfaces/interfaces";
+
+export const mouth: ColorMap = {
   "1": (hue: string) => {
     return `
     <svg

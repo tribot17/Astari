@@ -4,3 +4,7 @@ export interface colorPaletteInterface {
   bodyPart: any;
   partIndex: string;
 }
+
+export interface ColorMap {
+  [key: string]: (hue: string) => string;
+}

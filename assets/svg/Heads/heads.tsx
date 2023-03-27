@@ -1,4 +1,6 @@
-export const heads = {
+import { ColorMap } from "../../../interfaces/interfaces";
+
+export const heads: ColorMap = {
   "1": (hue: string) => {
     return `<svg
       viewBox="0 0 878 878"

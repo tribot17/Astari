@@ -1,4 +1,6 @@
-export const noses = {
+import { ColorMap } from "../../../interfaces/interfaces";
+
+export const noses: ColorMap = {
   "1": (hue: string) => {
     return `
     <svg
