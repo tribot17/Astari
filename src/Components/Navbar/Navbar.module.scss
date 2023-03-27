@@ -15,7 +15,7 @@
 
 .displayLink {
   display: flex;
-  width: 40%;
+  width: 45%;
   justify-content: space-around;
   text-align: center;
   align-items: center;
@@ -35,5 +35,36 @@
   &:hover {
     cursor: pointer;
     color: grey;
+  }
+}
+
+@media (max-width: 1650px) {
+  .displayLink {
+    width: 60%;
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 1150px) {
+  .displayLink {
+    width: 80%;
+    letter-spacing: 2px;
+  }
+}
+
+@media (max-width: 850px) {
+  .displayLink {
+    font-size: 1.5rem;
+    letter-spacing: 0px;
+  }
+}
+
+@media (max-width: 600px) {
+  #logo {
+    width: 80%;
+    height: 80%;
+  }
+  .displayLink {
+    font-size: 1.2rem;
   }
 }
