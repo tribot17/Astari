@@ -8,14 +8,12 @@ module.exports.setPosts = async (req: any, res: any) => {
   await postAddressCharacter(req.body.address, req.body.specs);
 
   res.status(200).json({ message: "character added" });
-  //Post message
 };
 
 module.exports.getCharacter = async (req: any, res: any) => {
   const address = req.params.address;
 
   const data = await getUser(address);
-  console.log(data);
 
   if (data) res.status(200).json({ user: data });
   else res.status(400);

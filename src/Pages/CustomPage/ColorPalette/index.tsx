@@ -1,8 +1,10 @@
 import styles from "./ColorPalette.module.scss";
 import React, { useEffect, useState } from "react";
-import { colorPaletteInterface } from "../../../../interfaces/interfaces";
-import colors from "../../../../assets/colors";
-const colorArray = ["Blue", "#FFA000", "Grey", "Black"];
+import {
+  colorPaletteInterface,
+  colorsPart,
+} from "../../../../interfaces/interfaces";
+import colorsAsset from "../../../../assets/colors";
 
 const index: React.FC<colorPaletteInterface> = ({
   setPaletteIsOpen,
@@ -11,6 +13,7 @@ const index: React.FC<colorPaletteInterface> = ({
   partIndex,
 }) => {
   const [colorIndex, setColorIndex] = useState<any>();
+  const colors: colorsPart = colorsAsset;
 
   useEffect(() => {
     setColorIndex(colors[partIndex]);
@@ -35,7 +38,7 @@ const index: React.FC<colorPaletteInterface> = ({
         </div>
         <div className={styles.palette_modal_color_grid}>
           {colorIndex &&
-            colorIndex.map((n, index) => (
+            colorIndex.map((n: any, index: number) => (
               <div
                 key={index}
                 className={styles.card}

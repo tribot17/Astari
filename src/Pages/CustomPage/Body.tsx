@@ -1,6 +1,10 @@
 import React from "react";
 
-const Body = ({ hue }) => {
+interface body {
+  hue: string;
+}
+
+const Body: React.FC<body> = ({ hue }) => {
   return (
     <svg viewBox="0 0 885 539" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path

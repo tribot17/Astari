@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import Web3 from "web3";
 import contractABI from "../../ABI/FirstWeaponABI.json";
+import { AbiItem } from "web3-utils";
 interface Web3ContextData {
   web3: any;
   walletAddress: string | undefined;
@@ -11,6 +12,10 @@ interface Web3ContextData {
 
 interface Web3Provider {
   children: any;
+}
+
+interface Window {
+  ethereum?: any;
 }
 
 export const Web3Context = createContext<Web3ContextData>({
@@ -26,14 +31,16 @@ export const Web3ContextProvider: React.FC<Web3Provider> = ({ children }) => {
   const [walletAddress, setWalletAddress] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [mintContract, setMintContract] = useState<any>();
+  const ethWindow: Window & typeof globalThis = window;
+  const myContractABI: AbiItem[] = contractABI as AbiItem[];
 
   const getData = async () => {
     return new Promise(async (res, rej) => {
       setIsLoading(true);
       const web3Instance = new Web3(Web3.givenProvider);
-      if (window.ethereum) {
+      if (ethWindow.ethereum) {
         try {
-          const accounts = await window.ethereum.request({
+          const accounts = await ethWindow.ethereum.request({
             method: "eth_requestAccounts",
           });
           res({ web3Instance, address: accounts[0] });
@@ -50,7 +57,7 @@ export const Web3ContextProvider: React.FC<Web3Provider> = ({ children }) => {
       setWeb3(web3Instance);
       setMintContract(
         new web3Instance.eth.Contract(
-          contractABI,
+          myContractABI,
           "0xD2310118F25997b21B724B8262aaAf3d51521CdE"
         )
       );
