@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <div className={styles.navbar}>
       <Link to={"/"}>
-        <img id={styles.logo} src="../../../assets/Logo.png" />
+        <img id={styles.logo} src="./logo.png" />
       </Link>
       <div className={styles.displayLink}>
         <Link to={"/custom"}>
