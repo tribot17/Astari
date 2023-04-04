@@ -237,14 +237,14 @@ const index = () => {
                   onClick={handlePartChange}
                   alt="up_arrow"
                   id={styles.up_arrow}
-                  src={`../../../assets/RightArrow.png`}
+                  src={`../../../assets/rightArrow.png`}
                 />
                 <p>{partIndex.toLocaleUpperCase()}</p>
                 <img
                   onClick={handlePartChange}
                   alt="down_arrow"
                   id={styles.down_arrow}
-                  src={`../../../assets/RightArrow.png`}
+                  src={`../../../assets/rightArrow.png`}
                 />
               </div>
               <div className={styles.change_index}>
@@ -252,7 +252,7 @@ const index = () => {
                   onClick={handleIndexChange}
                   alt="left_arrow"
                   id={styles.left_arrow}
-                  src={`../../../assets/LeftArrow.png`}
+                  src={`../../../assets/leftArrow.png`}
                 />
                 <p>
                   {bodyPart[partIndex].index ? bodyPart[partIndex].index : 0}
@@ -261,7 +261,7 @@ const index = () => {
                   onClick={handleIndexChange}
                   alt="rigth_arrow"
                   id={styles.right_arrow}
-                  src={`../../../assets/RightArrow.png`}
+                  src={`../../../assets/rightArrow.png`}
                 />
               </div>
             </div>
