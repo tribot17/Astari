@@ -237,7 +237,7 @@ const index = () => {
                   onClick={handlePartChange}
                   alt="up_arrow"
                   id={styles.up_arrow}
-                  src={`./assets/rightArrow.png`}
+                  src={`./rightArrow.png`}
                 />
                 <p>{partIndex.toLocaleUpperCase()}</p>
                 <img
