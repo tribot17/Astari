@@ -6,7 +6,7 @@ const HomePage = () => {
 
   return (
     <div className={styles.homePage}>
-      <img src="./public/stars.png" id={styles.stars} />
+      <img src="./assets/stars.png" id={styles.stars} />
       <img src="./public/earth.png" id={styles.earth} />
       <div className={styles.logo_button}>
         <img src="./public/logoAll.png" id={styles.logoAll} />
