@@ -244,7 +244,7 @@ const index = () => {
                   onClick={handlePartChange}
                   alt="down_arrow"
                   id={styles.down_arrow}
-                  src={`./public/rightArrow.png`}
+                  src={`./rightArrow.png`}
                 />
               </div>
               <div className={styles.change_index}>
@@ -252,7 +252,7 @@ const index = () => {
                   onClick={handleIndexChange}
                   alt="left_arrow"
                   id={styles.left_arrow}
-                  src={`./public/leftArrow.png`}
+                  src={`./leftArrow.png`}
                 />
                 <p>
                   {bodyPart[partIndex].index ? bodyPart[partIndex].index : 0}
@@ -261,7 +261,7 @@ const index = () => {
                   onClick={handleIndexChange}
                   alt="rigth_arrow"
                   id={styles.right_arrow}
-                  src={`./public/rightArrow.png`}
+                  src={`./rightArrow.png`}
                 />
               </div>
             </div>
