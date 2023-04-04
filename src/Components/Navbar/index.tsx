@@ -17,6 +17,7 @@ const Navbar = () => {
         <Link to={"/mint"}>
           <a className={styles.links}>MINT</a>
         </Link>
+        {/* comment */}
         {/* <Link to={"/"}>
           <a className={styles.links}>HOME</a>
         </Link> */}
