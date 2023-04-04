@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import styles from "./HomePage.module.scss";
-import stars from "../../../assets/stars.png";
 const HomePage = () => {
   useEffect(() => {}, []);
 
   return (
     <div className={styles.homePage}>
-      <img src={stars} id={styles.stars} />
+      <img src={"./stars.png"} id={styles.stars} />
       <img src="./earth.png" id={styles.earth} />
       <div className={styles.logo_button}>
         <img src="./public/logoAll.png" id={styles.logoAll} />
